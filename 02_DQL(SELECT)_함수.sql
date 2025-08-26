@@ -4,10 +4,19 @@
 	자바로 따지면 메서드
 	전달된 값을 가지고 계산된 결과를 반환해준다.
 	
-	- 단일행 함수
-	- 그룹 함수
+	- 단일행 함수  : N개의 값을 읽어서 N개의 결과를 반환(매 행마다 함수 결과 반환)
+	- ★★그룹 함수 : N개의 값을 읽어서 1개의 결과를 반환(그룹별로 함수 결과 반환)
 */
 ------------------------------------------- < 단일행 함수 > -------------------------------------------
+SELECT 
+	   SALARY
+	 , LENGTH(SALARY)
+	 , SUM(SALARY)
+  FROM 
+  	   EMPLOYEE;
+
+-- 단일행 함수와 그룹함수는 함께 사용할 수 없음 : 결과 행의 개수가 다르기 때문
+
 /*
  * < 문자열과 관련된 함수 >
  * LENGTH / LENGTHB
@@ -611,12 +620,84 @@ SELECT
   FROM 
   	   EMPLOYEE;
 
+-------------------------------------------
+-------------------------------------------
+
+--< ★그룹 함수★ >--
+/*
+ * N개의 값을 읽어서 1개의 결과를 반환(하나의 그룹별로 함수 실행결과를 반환)
+ */
+SELECT 
+	   SALARY
+  FROM 
+  	   EMPLOYEE;
+-- 1. SUM(숫자타입) : 해당 컬럼값들의 총 합계를 반환해주는 함수
+-- 전체 사원의 총 급여합계
+SELECT 
+	   SUM(SALARY)
+  FROM 
+  	   EMPLOYEE;
 
 
+-- 이메일에 0이 들어가는 사원들의 총 급여 합
+SELECT 
+	   SUM(SALARY)
+  FROM 
+  	   EMPLOYEE
+ WHERE 
+ 	   EMAIL LIKE '%0%'
+   AND
+	   DEPT_CODE ='D5';
+-------------------------------------------
+-- 2. AVG(숫자타입) : 해당 컬럼값들의 평균값을 구해서 반환
+-- 전체 사원들의 급여 평균 구하기
+SELECT 
+	   ROUND(AVG(SALARY))
+  FROM 
+  	   EMPLOYEE;
 
+-- 3. MIN(ANY) : 해당 컬럼값들 중 작은 값 반환
+SELECT 
+	   MIN(SALARY) "제일 작은 급여"
+	 , MIN(EMP_NAME) "제일 이름이 빠른 사람"
+	 , MIN(HIRE_DATE) "제일 빠른 입사일"
+  FROM 
+  	   EMPLOYEE;
+-- 4. MAX(ANY) : 해당 컬럼값들 중 큰 값 반환
+SELECT 
+	   MAX(SALARY) "제일 높은 급여"
+	 , MAX(EMP_NAME) "제일 이름이 느린 사람"
+	 , MAX(HIRE_DATE) "제일 늦은 입사일"
+  FROM 
+  	   EMPLOYEE;
 
+-- 5. COUNT(* / 컬럼명 / DISTINCT 컬럼명) : 행 개수 세서 반환
 
+SELECT * FROM EMPLOYEE;
+-- COUNT(*) : 조회 결과에 해당하는 모든 행 개수를 다 세서 반환
+SELECT 
+	   COUNT(*)
+  FROM 
+  	   EMPLOYEE;
 
+-- 보너스를 받는 사원의 수
+-- COUNT(컬럼명) : 제시한 컬럼값이 NULL이 아닌 행만 개수를 세서 반환
+SELECT 
+	   COUNT(BONUS)
+  FROM 	
+  	   EMPLOYEE;
 
+SELECT 
+	   COUNT(*)
+  FROM 
+  	   EMPLOYEE
+ WHERE 
+ 	   BONUS IS NOT NULL;
 
+-- 현재 사원들이 속해있는 부서 개수
+-- COUNT(DISTINCT 컬럼명): 제시한 해당 컬럼값이 중복값이 존재할 경우 하나로만 세서 반환
+SELECT 	 
+	   COUNT(DISTINCT DEPT_CODE)
+  FROM 
+  	   EMPLOYEE;
 

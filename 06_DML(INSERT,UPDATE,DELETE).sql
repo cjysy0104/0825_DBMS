@@ -235,3 +235,21 @@ DELETE
 
 DELETE FROM DEPT_COPY; 		-- 0.004s
 TRUNCATE TABLE DEPT_COPY2;	-- 0.025s
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
